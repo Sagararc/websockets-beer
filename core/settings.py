@@ -1,7 +1,7 @@
 
 
 from pathlib import Path
-
+import asgi
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,7 +62,7 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'core.asgi.application'
 
-WSGI_APPLICATION = 'core.wsgi.application'
+
 
 
 # Database
