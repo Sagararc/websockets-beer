@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>Let's CHAT </h1>
+
+
+
+
+    <script>
+      
+       var ws = new WebSocket('ws://127.0.0.1:8000/ws/sc/')
+
+
+       ws.onopen = function () {
+        console.log('Websocket connection open...')
+        ws.send("Hi this is from developer's side..")
+       }
+
+
+       ws.onmessage = function(event){
+        console.log('Message Recieved from Server...',event)
+       }
+
+       ws.onerror = function(event){
+        console.log('Error from Server...',event)
+       }
+
+       
+       ws.onclose = function(event){
+        console.log('Stopped from Server...',event)
+       }
+    </script>
+
+</body>
+</html>
