@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your meta tags and title here -->
+</head>
+<body>
+    
+<h1>Let's CHAT </h1>
+
+<form id="contactForm">
+    <input type="text" name="name" placeholder="Name"><br>
+    <input type="text" name="email" placeholder="Song"><br>
+    <textarea name="address" placeholder="Chakna"></textarea><br>
+    <input type="submit" value="Submit">
+</form>
+
+<div id="displayData"></div>
+
+<script>
+    var ws = new WebSocket('ws://127.0.0.1:8000/ws/contact/');
+
+    ws.onopen = function () {
+        console.log('Websocket connection open...')
+        ws.send(JSON.stringify({ 'message': "Hi this is from developer's side.." }));
+    }
+    
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+        var formObject = {};
+        formData.forEach(function(value, key){
+            formObject[key] = value;
+        });
+
+        ws.send(JSON.stringify({ 'message': formObject }));
+    });
+
+    ws.onmessage = function(event) {
+        var message = JSON.parse(event.data);
+        console.log('Message Received from Server...', message);
+
+        // Display the received data on the page
+        var displayDiv = document.getElementById('displayData');
+        displayDiv.innerHTML = `
+            <h2>Received Data:</h2>
+            <p>Name: ${message.message.name}</p>
+            <p>Email: ${message.message.email}</p>
+            <p>Address: ${message.message.address}</p>
+        `;
+    }
+</script>
+
+</body>
+</html>

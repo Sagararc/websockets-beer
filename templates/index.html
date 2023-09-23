@@ -4,39 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>WebSocket Example</title>
 </head>
 <body>
     
-<h1>Let's CHAT </h1>
+<h1>Let's CHAT</h1>
 
+<div id="message-container"></div>
 
+<script>
+    var ws = new WebSocket('ws://127.0.0.1:8000/ws/sc/')
 
-
-    <script>
-      
-       var ws = new WebSocket('ws://170.187.237.51:8001/ws/sc/')
-
-
-       ws.onopen = function () {
+    ws.onopen = function () {
         console.log('Websocket connection open...')
         ws.send("Hi this is from developer's side..")
-       }
+    }
 
+    ws.onmessage = function(event){
+        var receivedData = event.data;
+        console.log('Message Received from Server...', receivedData);
 
-       ws.onmessage = function(event){
-        console.log('Message Recieved from Server...',event)
-       }
+        var messageContainer = document.getElementById('message-container');
+        messageContainer.innerHTML += '<p>' + receivedData + '</p>';
+    }
 
-       ws.onerror = function(event){
-        console.log('Error from Server...',event)
-       }
+    ws.onerror = function(event){
+        console.log('Error from Server...', event)
+    }
 
-       
-       ws.onclose = function(event){
-        console.log('Stopped from Server...',event)
-       }
-    </script>
+    ws.onclose = function(event){
+        console.log('Stopped from Server...', event)
+    }
+</script>
 
 </body>
 </html>

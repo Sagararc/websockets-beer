@@ -1,49 +1,23 @@
-from channels.exceptions import StopConsumer
-from time import sleep
+
+import json
+from channels.generic.websocket import AsyncWebsocketConsumer
+
 import asyncio
-from channels.consumer import SyncConsumer,AsyncConsumer
 
-class MySyncConsumer(SyncConsumer):
-    def websocket_connect(self,event):
-        print("Websocket Connected...." , event)
-        self.send({
-            'type' : 'websocket.accept',
-        })
-        
-    def websocket_recieve(self , event):
-        print('Message Recieved from Client...',event)
-        print(event['text'])
-        for i in range(50):
-            self.send({
-                'type' : 'websocket.send',
-                'text' : str(i)
-            })
-            sleep(1)
-    
-    def websocket_disconnect(self , event):
-        print('Websocket Disconnected...',event)
-        raise StopConsumer()
+class ContactConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
 
+    async def disconnect(self, close_code):
+        pass
 
-class MyAsyncConsumer(AsyncConsumer):
-    
-    async def websocket_connect(self , event):
-        print("Websocket Connected...." , event)
-        await self.send({
-            'type' : 'websocket.accept',
-            })
-        
-    async def websocket_recieve(self , event):
-        print('Message Recieved from Client...', event)
-        print(event['text'])
-        for i in range(50):
-            await self.send({
-                'type' : 'websocket.send',
-                'text' : str(i)
-            })
-            await asyncio.sleep(1)
-            
-    async def websocket_disconnect(self , event):
-        print('Websocket Disconnected...',event)
-        raise StopConsumer()
-        
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json.get('message', '')
+
+        # Simulate a delay of 15 seconds
+        await asyncio.sleep(5)
+
+        await self.send(text_data=json.dumps({
+            'message': message
+        }))
