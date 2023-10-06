@@ -14,19 +14,24 @@
     <h1>ABI Digital Activation</h1>
 
     <div class="row container-fluid">
-        <div class="col md-12">
+        <div class="col md-9">
             <form id="contactForm">
                 <input class="form-control" type="text" name="name" placeholder="Name"><br>
                 <input class="form-control" type="text" name="email" placeholder="Song"><br>
-                <br>
+      
                 <input type="submit" class="btn btn-primary" value="Submit">
             </form>
         </div>
     </div>
 
-    <div class="card">
-    <div id="displayData"></div>
-</div>
+
+    <div class="row container-fluid">
+        <div class="col md-9">
+            <div class="card">
+                <div id="displayData"></div>
+            </div>
+        </div>
+    </div>
     <script>
         var ws = new WebSocket('ws://170.187.237.51:8001/ws/contact/');
 
