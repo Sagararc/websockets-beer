@@ -1,8 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from .views import FormData,datashow,success
-
+from .views import FormData,datashow
 urlpatterns = [
 
     path('' , FormData , name='form'),
