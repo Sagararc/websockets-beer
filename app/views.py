@@ -35,3 +35,5 @@ def datashow(request) :
     return render(request , 'data.html' , {'usr' : formData})
 
 
+def success(request):
+    return render(request , 'success.html')
