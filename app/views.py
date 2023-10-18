@@ -1,4 +1,4 @@
-from django.shortcuts import render , HttpResponse
+from django.shortcuts import render , HttpResponse , redirect
 from .forms import Form
 from .models import FormModel
 # Create your views here.
@@ -24,7 +24,7 @@ def FormData(request):
             form.instance.counts = counts
            
             form.save()
-            return HttpResponse('Success')
+            return redirect('')
         else:
             print(form.errors)   
     return render(request , 'form.html')
@@ -33,3 +33,7 @@ def FormData(request):
 def datashow(request) : 
     formData =  FormModel.objects.all()
     return render(request , 'data.html' , {'usr' : formData})
+
+
+def success(request):
+    return render(request , 'success.html')
