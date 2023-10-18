@@ -1,11 +1,9 @@
 
 from django.contrib import admin
-from django.urls import path
-from .views import FormData,datashow
+from django.urls import path,include
+
 
 urlpatterns = [
-
-    path('' , FormData , name='form'),
-    path('data/' , datashow , name='data'),
-    path('success/' , success , name='success'),
+    path('admin/', admin.site.urls),
+    path('', include('app.urls'))
 ]
