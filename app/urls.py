@@ -7,5 +7,5 @@ urlpatterns = [
 
     path('' , FormData , name='form'),
     path('data/' , datashow , name='data'),
-    path('success/' , success , name='success'),
+ 
 ]
